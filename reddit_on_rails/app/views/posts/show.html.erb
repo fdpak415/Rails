@@ -1,0 +1,37 @@
+<h1><%= @post.title %></h1>
+
+<h4>Content</h4>
+<%= @post.content %>
+
+<br><br>
+
+<h3>Subs</h3>
+
+<ul>
+  <% Sub.all.each do |sub| %>
+    <li><%= link_to "#{sub.title}", sub_url(sub) %></li>
+  <% end %>
+</ul>
+
+<br><br>
+
+<h2>Comments</h2>
+
+<%= link_to "Comment on this post", new_post_comment_url(@post) %>
+
+  <ul>
+    <% comments_by_parent = @post.comments_by_parent %>
+    <% comments_by_parent[nil].each do |top_level_comment| %>
+      <li>
+        <%= render("comments/comment",
+                   comment: top_level_comment,
+                   comments_by_parent: comments_by_parent) %>
+      </li>
+    <% end %>
+  </ul>
+
+<br><br>
+
+<% if current_user.id == @post.user_id %>
+<%= link_to "Edit Post", edit_post_url %>
+<% end %>

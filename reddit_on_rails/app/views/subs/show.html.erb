@@ -1,0 +1,22 @@
+<h1><%= @sub.title %></h1>
+
+<h4>Description</h4>
+<%= @sub.description %>
+
+<br><br>
+
+<%= link_to "Make a New Post", new_post_url %>
+
+<br><br>
+
+<ul>
+  <% Post.all.each do |post| %>
+    <li><%= link_to "#{post.title}", post_url(post) %></li>
+  <% end %>
+</ul>
+
+<br><br>
+
+<% if current_user.id == @sub.user_id %>
+<%= link_to "Edit Sub", edit_sub_url %>
+<% end %>
